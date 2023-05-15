@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if headers %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    {% for header in headers %}
+    <h2>{{ header }}</h2>
+    <select name="mapping[]">
+        {% for choice in mapping_choices %}
+        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+        {% endfor %}
+    </select>
+    {% endfor %}
+    <input type="submit" value="Import CSV data">
+</form>
+{% else %}
+{% endif %}
+{% endblock %}
+
